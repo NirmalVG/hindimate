@@ -1,0 +1,28 @@
+# ---- Environment secrets ----
+# NEVER commit these. Groq API keys, Supabase service-role keys, Cohere keys
+# all live in these files locally and get injected as env vars in prod
+# (Vercel/Render dashboards), not committed to git.
+.env
+.env.local
+.env.*.local
+backend/.env
+
+# ---- Python (backend/) ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# ---- Node (frontend/) ----
+node_modules/
+.next/
+out/
+frontend/.turbo
+
+# ---- OS / editor cruft ----
+.DS_Store
+.vscode/
+.idea/
+*.log
