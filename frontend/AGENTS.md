@@ -20,6 +20,7 @@ Build only:
 - Session-level state (`sessions`, `agent_turns` tables)
 - Evaluation harness (RAGAS-style + action-selection accuracy)
 - Minimal responsive UI, dark-first theme
+- Clerk authentication (Google OAuth), integrated with Supabase via third-party auth
 
 Do not overbuild. No admin dashboard, no fine-tuning pipeline, no multi-agent split — those are explicitly Phase 2/3 in `docs/PRD.md`.
 
@@ -128,7 +129,9 @@ Use:
 Do not use:
 
 - Kubernetes, Terraform, or any multi-region infra (see PRD §9 — explicitly out of scope until growth data justifies it)
-- A hand-rolled JWT auth system — Supabase Auth only
+- A hand-rolled JWT auth system, or Supabase Auth directly — Clerk handles auth,
+  integrated with Supabase as a third-party auth provider (RLS policies check
+  `auth.jwt()->>'sub'` for the Clerk user ID)
 - Redis — not until there's concrete evidence of load that justifies it
 - Self-hosted GPU inference — Groq only, unless a documented fallback-provider need arises
 
@@ -217,14 +220,16 @@ Never run from browser code:
 
 Canonical list lives in `.env.example`. Only `NEXT_PUBLIC_*` values may reach browser code; everything else is server-only.
 
-| Variable                        | Purpose                                      | Exposure        |
-| ------------------------------- | -------------------------------------------- | --------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL                         | client + server |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key                            | client + server |
-| `SUPABASE_SERVICE_ROLE_KEY`     | Service-role DB access for agent tool writes | server only     |
-| `GROQ_API_KEY`                  | LLM inference for all agent nodes            | server only     |
-| `COHERE_API_KEY`                | Rerank v3 in the `retrieve` tool             | server only     |
-| `AGENT_MAX_TOOL_CALLS`          | Loop-guard cap per turn (default 3)          | server only     |
+| Variable                            | Purpose                                      | Exposure        |
+| ----------------------------------- | -------------------------------------------- | --------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`          | Supabase project URL                         | client + server |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`     | Supabase anon key                            | client + server |
+| `SUPABASE_SERVICE_ROLE_KEY`         | Service-role DB access for agent tool writes | server only     |
+| `GROQ_API_KEY`                      | LLM inference for all agent nodes            | server only     |
+| `COHERE_API_KEY`                    | Rerank v3 in the `retrieve` tool             | server only     |
+| `AGENT_MAX_TOOL_CALLS`              | Loop-guard cap per turn (default 3)          | server only     |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key                        | client + server |
+| `CLERK_SECRET_KEY`                  | Clerk server-side key                        | server only     |
 
 Keep this table and `.env.example` in sync when variables change.
 
