@@ -1,26 +1,121 @@
+/* app/globals.css */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* ---------- Colors (from DESIGN.md, Material 3 semantic naming) ---------- */
+  --color-surface: #fff8f5;
+  --color-surface-dim: #e6d7ce;
+  --color-surface-bright: #fff8f5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fff1e8;
+  --color-surface-container: #faebe1;
+  --color-surface-container-high: #f5e5dc;
+  --color-surface-container-highest: #efe0d6;
+  --color-surface-variant: #efe0d6;
+  --color-on-surface: #211a15;
+  --color-on-surface-variant: #554336;
+  --color-inverse-surface: #372f29;
+  --color-inverse-on-surface: #fdeee4;
+  --color-outline: #887364;
+  --color-outline-variant: #dbc2b0;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: #fff8f5;
+  --color-on-background: #211a15;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface-tint: #8f4e00;
+  --color-primary: #8f4e00;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #ff9933;
+  --color-on-primary-container: #693800;
+  --color-inverse-primary: #ffb77a;
+  --color-primary-fixed: #ffdcc2;
+  --color-primary-fixed-dim: #ffb77a;
+  --color-on-primary-fixed: #2e1500;
+  --color-on-primary-fixed-variant: #6d3a00;
+
+  --color-secondary: #096969;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #a2f0ef;
+  --color-on-secondary-container: #166f6f;
+  --color-secondary-fixed: #a2f0ef;
+  --color-secondary-fixed-dim: #86d4d3;
+  --color-on-secondary-fixed: #002020;
+  --color-on-secondary-fixed-variant: #004f4f;
+
+  --color-tertiary: #ac332a;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #ff9488;
+  --color-on-tertiary-container: #871713;
+  --color-tertiary-fixed: #ffdad5;
+  --color-tertiary-fixed-dim: #ffb4aa;
+  --color-on-tertiary-fixed: #410001;
+  --color-on-tertiary-fixed-variant: #8b1a16;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* ---------- Fonts (variables set by next/font in layout.tsx) ---------- */
+  --font-display: var(--font-plus-jakarta), sans-serif;
+  --font-body: var(--font-be-vietnam), sans-serif;
+  --font-devanagari: var(--font-baloo), sans-serif;
+
+  /* ---------- Type scale (DESIGN.md typography block) ---------- */
+  --text-display-lg: 48px;
+  --text-display-lg--line-height: 56px;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 700;
+
+  --text-display-lg-mobile: 32px;
+  --text-display-lg-mobile--line-height: 40px;
+  --text-display-lg-mobile--font-weight: 700;
+
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--font-weight: 600;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-caps: 12px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.05em;
+  --text-label-caps--font-weight: 700;
+
+  /* devanagari-display: fixed to use --font-devanagari (Baloo 2), not Plus Jakarta Sans */
+  --text-devanagari-display: 32px;
+  --text-devanagari-display--line-height: 48px;
+  --text-devanagari-display--font-weight: 500;
+
+  /* ---------- Radius (high-radius, "no sharp corners" per DESIGN.md) ---------- */
+  --radius-sm: 0.5rem;
+  --radius: 1rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+
+  /* ---------- Spacing (8px base unit — matches Tailwind's default scale already) ---------- */
+  --spacing-gutter: 24px;
+  --spacing-margin-mobile: 20px;
+  --spacing-margin-desktop: 40px;
+  --spacing-section-gap: 80px;
+  --container-max: 1200px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-body);
 }
+
+/* Deliberate: no prefers-color-scheme dark-mode block. HindiMate is
+   light/vibrant-only by design decision (see DESIGN.md) — not an
+   oversight, so don't re-add a dark variant without a product decision
+   to actually support one. */
